@@ -3,9 +3,9 @@ import random
 
 def custom_append(old_list, new_element):  # ADDITIONAL TASK
     new_list = [0 for _ in range(len(old_list) + 1)]
-    for _ in range(len(old_list)):
-        new_list[i] = old_list[i]
-    new_list[-1] = new_element
+    for j in range(len(old_list)):
+        new_list[j] = old_list[j]
+    new_list[-1] = new_element      
     return new_list
 
 
@@ -22,7 +22,7 @@ print(f'\nМатриця планування експерименту: {x}')
 y = []  # значення функції відгуку
 
 for exp in range(number_of_experiments):
-    y.append(a[0] + a[1] * x[exp][0] + a[2] * x[exp][1] + a[3] * x[exp][2])
+    y = custom_append(y, (a[0] + a[1] * x[exp][0] + a[2] * x[exp][1] + a[3] * x[exp][2]))
 
 print('\nЗначення функції відгуку:', y)
 
@@ -31,7 +31,7 @@ x0 = []
 for i in range(3):
     xi = [exp[i] for exp in x]
     x0i = (max(xi)+min(xi)) / 2
-    x0.append(x0i)
+    x0 = custom_append(x0, x0i)
     print(f'x0{i+1} = {x0i}')
 
 print('\nІнтервал зміни факторів:')
@@ -39,7 +39,7 @@ print('\nІнтервал зміни факторів:')
 dx = []
 for i in range(3):
     dxi = x0[i] - min([exp[i] for exp in x])
-    dx.append(dxi)
+    dx = custom_append(dx, dxi)
     print(f'dx0{i + 1} = {dxi}')
 
 yet = a[0] + a[1] * x0[0] + a[2] * x0[1] + a[3] * x0[2]
