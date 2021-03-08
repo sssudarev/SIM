@@ -1,5 +1,14 @@
 import random
 
+
+def custom_append(old_list, new_element):  # ADDITIONAL TASK
+    new_list = [0 for _ in range(len(old_list) + 1)]
+    for _ in range(len(old_list)):
+        new_list[i] = old_list[i]
+    new_list[-1] = new_element
+    return new_list
+
+
 number_of_experiments = int(input("Введіть кількість експерементів:"))
 a = [random.randint(1, 20) for _ in range(4)]  # список коефіцієнтів
 
