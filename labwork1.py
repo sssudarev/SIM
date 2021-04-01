@@ -5,7 +5,7 @@ def custom_append(old_list, new_element):  # ADDITIONAL TASK
     new_list = [0 for _ in range(len(old_list) + 1)]
     for j in range(len(old_list)):
         new_list[j] = old_list[j]
-    new_list[-1] = new_element      
+    new_list[-1] = new_element
     return new_list
 
 
