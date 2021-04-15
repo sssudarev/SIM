@@ -51,9 +51,9 @@ sigma = [sum([(element - y_average_value[i]) ** 2 for element in y_matrix[i]]) /
 
 sigma_theta = math.sqrt((2 * (2 * m - 2)) / (m * (m - 4)))  # основне відхилення
 
-fuv1 = sigma[0] / sigma[1]
-fuv2 = sigma[2] / sigma[0]
-fuv3 = sigma[2] / sigma[1]
+fuv1 = max(sigma[0], sigma[1]) / min(sigma[0], sigma[1])
+fuv2 = max(sigma[2], sigma[0]) / min(sigma[2], sigma[0])
+fuv3 = max(sigma[2], sigma[1]) / min(sigma[2], sigma[1])
 
 theta_uv1 = ((m - 2) / m) * fuv1
 theta_uv2 = ((m - 2) / m) * fuv2
