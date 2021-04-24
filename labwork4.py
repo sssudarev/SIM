@@ -5,6 +5,7 @@ from scipy.stats import f, t
 from numpy.linalg import solve
 
 
+
 def regression(x, b):
     y = sum([x[i] * b[i] for i in range(len(x))])
     return y
@@ -78,7 +79,7 @@ def find_coefficients(X, Y, norm=False):
     return B
 
 
-def bs(x, y, y_aver, n):
+def bs(x, y_aver, n):
     res = [sum(1 * y for y in y_aver) / n]
     for i in range(7):
         b = sum(j[0] * j[1] for j in zip(x[:, i], y_aver)) / n
@@ -90,7 +91,7 @@ def students_criteria2(x, y, y_aver, n, m):
     S_kv = dispersion(y, y_aver, n, m)
     s_kv_aver = sum(S_kv) / n
     s_Bs = (s_kv_aver / n / m) ** 0.5
-    Bs = bs(x, y, y_aver, n)
+    Bs = bs(x, y_aver, n)
     ts = [round(abs(B) / s_Bs, 3) for B in Bs]
 
     return ts
@@ -185,6 +186,8 @@ def check(X, Y, B, n, m, norm=False):
 
 def with_interaction_effect(n, m):
     X, Y, X_norm = planing_matrix_interaction_effect(n, m)
+
+
 
     y_aver = [round(sum(i) / len(i), 3) for i in Y]
 
@@ -312,18 +315,23 @@ def linear(n, m):
         return True
     else:
         print('Математична модель не адекватна експериментальним даним')
-        return False
 
 
 def main(n, m):
-    if not linear(n, m):
-        with_interaction_effect(n, m)
+    main_1 = linear(n, m)
+    if not main_1:
+        interaction_effect = with_interaction_effect(n, m)
+        if not interaction_effect:
+            main(n, m)
 
 
 if __name__ == '__main__':
-    x_range = ((-5, 15), (-25, 10), (-5, 20))
+    x_range = ((-25, 75), (-20, 40), (-20, -15))
 
     y_max = 200 + int(sum([x[1] for x in x_range]) / 3)
     y_min = 200 + int(sum([x[0] for x in x_range]) / 3)
 
-    main(8, 3)
+    N = 8
+    M = 3
+    if not main(N, M):
+        main(N * 1.5, M * 1.5)
