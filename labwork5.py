@@ -67,6 +67,7 @@ class Criteria:
 class Experiment:
 
     def __init__(self, x1, x2, x3):
+        self.counter = 0
 
         self.n, self.m = 15, 6
 
@@ -172,7 +173,8 @@ class Experiment:
         if F_p < f_t:
             print('Математична модель адекватна експериментальним даним')
         else:
-            print('Математична модель не адекватна експериментальним даним')
+            print('Математична модель не адекватна експериментальним даним') # дисперсія однорідна, залишимо лічільник тут
+            self.counter += 1
 
     def fill_y(self):
         self.y = np.zeros(shape=(self.n, self.m))
@@ -251,6 +253,13 @@ class Experiment:
 
 
 if __name__ == '__main__':
-    experiment = Experiment((-10, 10), (-10, 2),(-10, 4))
 
-    experiment.run_experiment(15, 3)
+    experiment = Experiment((-10, 10), (-10, 2),(-10, 4))
+    for i in range(100):
+        experiment.run_experiment(15, 3)
+    print("Кількість неоднорідних дисперсій - ", experiment.counter)
+
+
+
+
+
