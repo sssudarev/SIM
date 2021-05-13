@@ -316,6 +316,8 @@ def linear(n, m):
     else:
         print('Математична модель не адекватна експериментальним даним')
 
+        main(N * 1.5, M * 1.5)
+
 
 def main(n, m):
     main_1 = linear(n, m)
@@ -333,5 +335,4 @@ if __name__ == '__main__':
 
     N = 8
     M = 3
-    if not main(N, M):
-        main(N * 1.5, M * 1.5)
+    main(N, M)
