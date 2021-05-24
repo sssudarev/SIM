@@ -5,6 +5,7 @@ import numpy
 from numpy.linalg import solve
 from scipy.stats import f, t
 from prettytable import PrettyTable
+from time import *
 
 
 class Lab6:
@@ -159,6 +160,8 @@ class Lab6:
                      list_a[k][9]
         for i in range(15):
             print('\t{:.3f}'.format(y_i[i]), end=' ')
+
+        cohren_time = time()
         print('\nПеревірка за критерієм Кохрена:')
         gp = max(dispersions) / sum(dispersions)
         gt = 0.3346
@@ -167,7 +170,9 @@ class Lab6:
             print('\tДисперсія однорідна.')
         else:
             print('\tДисперсія неоднорідна.')
+        cohren_time -= time()
 
+        student_time = time()
         print('Перевірка значущості коефіцієнтів за критерієм Стьюдента:')
         sb = sum(dispersions) / len(dispersions)
         sbs = (sb / (15 * self.m)) ** 0.5
@@ -190,6 +195,7 @@ class Lab6:
                 d -= 1
             else:
                 coefficients1.append(beta[j])
+        student_time -= time()
         print('\tЗначущі коефіцієнти регресії:', [round(i, 3) for i in coefficients1])
         print('\tНезначущі коефіцієнти регресії:', [round(i, 3) for i in coefficients2])
 
@@ -202,15 +208,20 @@ class Lab6:
         for i in range(15):
             print('\t{:.3f}'.format(y_st[i]), end=' ')
 
+        fisher_time = time()
         print('\nПеревірка адекватності за критерієм Фішера:')
         sad = self.m * sum([(y_st[i] - average_y[i]) ** 2 for i in range(15)]) / (self.n - d)
         fp = sad / sb
         f4 = self.n - d
         print(f'\tFp = {fp}')
+        fisher_time -= time()
         if fp < f.ppf(q=0.95, dfn=f4, dfd=f3):
             print('\tРівняння регресії адекватне.')
         else:
             print('\tРівняння регресії не є адекватним.')
+
+        full_time = 1000*(-cohren_time-student_time-fisher_time)
+        print("Час виконання статичних перевірок:", full_time, "мс")
 
 
 if __name__ == '__main__':
